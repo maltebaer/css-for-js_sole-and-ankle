@@ -31,11 +31,24 @@ const ShoeCard = ({
             ? 'new-release'
             : 'default'
 
+    const BadgeVariant = variant === 'on-sale'
+        ? SaleBadge
+        : variant === 'new-release'
+            ? NewReleaseBadge
+            : undefined
+
+    const badgeContent = variant === 'on-sale'
+        ? 'Sale'
+        : variant === 'new-release'
+            ? 'Just released!'
+            : undefined
+
     return (
         <Link href={`/shoe/${slug}`}>
             <Wrapper>
                 <ImageWrapper>
                     <Image alt="" src={imageSrc} />
+                    {BadgeVariant && <BadgeVariant>{badgeContent}</BadgeVariant>}
                 </ImageWrapper>
                 <Spacer size={12} />
                 <Row>
@@ -50,6 +63,24 @@ const ShoeCard = ({
     );
 };
 
+const Badge = styled.div`
+    position: absolute;
+    top: 12px;
+    right: -4px;
+    padding: 7px 10px;
+    color: ${COLORS.white};
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 2px;
+`
+
+const SaleBadge = styled(Badge)`
+    background-color: ${COLORS.primary};
+`
+const NewReleaseBadge = styled(Badge)`
+    background-color: ${COLORS.secondary};
+`
+
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
@@ -63,6 +94,7 @@ const ImageWrapper = styled.div`
 
 const Image = styled.img`
     width: 100%;
+    border-radius: 16px 16px 4px 4px;
 `;
 
 const Row = styled.div`
